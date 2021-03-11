@@ -2,12 +2,23 @@
 from random import randrange
 
 
-def RandomizedPartition(array, low, high):
+def RandomizedPartition(A, p, r):
     """
     Implement Randomized partitioning from Cormen book (same as lab 4)
     """
-
-    return -1
+    i = randrange(p,r)
+    A[r], A[i] = A[i], A[r]
+    return part(A, p, r)
+    
+def part(A, p, r):
+    x = A[r]
+    i = p-1
+    for j in range(p, r):
+        if A[j] <= x:
+            i = i+1
+            A[i], A[j] = A[j], A[i]
+    A[i+1], A[r] = A[r], A[i+1]
+    return (i+1)
     
 
 
@@ -34,4 +45,12 @@ def OrderStatistics(array, p, r, i):
     For hints check Chapter 9 from Cormen book.
     
     """
-    return -1
+    if p == r:
+        return array[p]
+    q = RandomizedPartition(array, p, r)
+    k = q - p + 1
+    if i == k:
+        return array[q]
+    elif i < k:
+        return OrderStatistics(array, p, q-1, i)
+    else return OrderStatistics(array, q+1, r, i-k)

@@ -48,9 +48,10 @@ def OrderStatistics(array, p, r, i):
     if p == r:
         return array[p]
     q = RandomizedPartition(array, p, r)
-    k = q - p + 1
-    if i == k:
+    k = (q - p) + 1
+    if i+1 == k:
         return array[q]
-    elif i < k:
-        return OrderStatistics(array, p, q-1, i)
-    else return OrderStatistics(array, q+1, r, i-k)
+    elif i+1 < k:
+        return OrderStatistics(array, p, (q-1), i)
+    else:
+        return OrderStatistics(array, (q+1), r, (i-k))
